@@ -5,6 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<IMonthExtractor, MonthExtractor>()
+                .AddTransient<IYearExtractor, YearExtractor>();
 
 var app = builder.Build();
 
