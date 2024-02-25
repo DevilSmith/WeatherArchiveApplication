@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>AnyCPU</Platforms>
+    <RuntimeIdentifier>$(WEATHER_ARCHIVE_APP_DOTNET_PLATFORM)</RuntimeIdentifier>
+    <PublishReadyToRun>true</PublishReadyToRun>
+		<PublishSingleFile>true</PublishSingleFile>
+  </PropertyGroup>
+
+</Project>
