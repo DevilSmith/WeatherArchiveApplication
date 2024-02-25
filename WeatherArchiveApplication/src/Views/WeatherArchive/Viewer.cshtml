@@ -2,6 +2,47 @@
     ViewData["Title"] = "Weather Archive Viewer";
 }
 
+@model List<WeatherRecord>
+
 <div class="text-center">
-    <h1 class="display-4">Weather Archive Viewer</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>
+              <th scope="col">Temperature</th>
+              <th scope="col">Humidity</th>
+              <th scope="col">Dewpoint</th>
+              <th scope="col">Atmosphere Pressure</th>
+              <th scope="col">Wind Direction</th>
+              <th scope="col">Wind Speed</th>
+              <th scope="col">Overcast</th>
+              <th scope="col">Overcast Lower Limit</th>
+              <th scope="col">Horizontal Visibility</th>
+              <th scope="col">Weather Events</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach(WeatherRecord record in Model)
+              {
+              <tr>
+                <th scope="row">@record.DateOfRecord</th>
+                <td>@record.TimeOfRecord</td>
+                <td>@record.Temperature</td>
+                <td>@record.Humidity</td>
+                <td>@record.Dewpoint</td>
+                <td>@record.AtmosPressure</td>
+                <td>@record.WindDirection</td>
+                <td>@record.WindSpeed</td>
+                <td>@record.Overcast</td>
+                <td>@record.OvercastLowerLimit</td>
+                <td>@record.HorizontalVisibility</td>
+                <td>@record.WeatherEvents</td>
+              </tr>
+              }
+          </tbody>
+        </table>
+    </div>
 </div>
+

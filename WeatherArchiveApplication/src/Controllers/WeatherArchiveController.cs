@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WeatherArchiveApp.Models;
 
-namespace src.Controllers;
+namespace WeatherArchiveApp.Controllers;
 
 public class WeatherArchiveController : Controller
 {
@@ -20,7 +20,11 @@ public class WeatherArchiveController : Controller
 
     public IActionResult Viewer()
     {
-        return View();
+        using (ApplicationContext db = new ApplicationContext())
+        {
+            var weatherRecords = db.WeatherRecords.ToList();
+            return View(weatherRecords);
+        }
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

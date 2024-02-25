@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WeatherArchiveApp.Models;
 
-namespace src.Controllers;
+namespace WeatherArchiveApp.Controllers;
 
 public class HomeController : Controller
 {
@@ -14,11 +14,6 @@ public class HomeController : Controller
     }
 
     public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult Privacy()
     {
         return View();
     }
