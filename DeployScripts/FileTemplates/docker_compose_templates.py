@@ -1,4 +1,4 @@
-# Generating dockerfile for API app:
+# Generating docker-compose.yml file for ASP NET MVC Application:
 def get_docker_compose_localhost(
     PGADMIN_CONTAINER_NAME,
     POSTGRES_CONTAINER_NAME,

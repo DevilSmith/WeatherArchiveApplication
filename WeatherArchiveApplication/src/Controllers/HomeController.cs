@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using src.Models;
+using WeatherArchiveApp.Models;
 
 namespace src.Controllers;
 

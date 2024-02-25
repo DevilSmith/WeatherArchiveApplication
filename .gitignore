@@ -3,4 +3,4 @@ WeatherArchiveApplication/src/bin/
 WeatherArchiveApplication/src/obj/
 WeatherArchiveApplication/WeatherArchiveApplication.dockerfile
 docker-compose.yml
-DeployScripts/__pycache__/
+DeployScripts/FileTemplates/__pycache__/

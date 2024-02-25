@@ -1,3 +1,6 @@
+using WeatherArchiveApp.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,5 +26,11 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+using (ApplicationContext db = new ApplicationContext())
+{
+    db.Database.Migrate();
+    db.SaveChanges();
+}
 
 app.Run();
