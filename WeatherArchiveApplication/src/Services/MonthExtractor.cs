@@ -1,19 +1,45 @@
 using System.Globalization;
 
-public interface IMonthExtractor
+public interface IMonthExtractor<T>
 {
-    public List<string> GetMonthStrings(List<WeatherRecord> records);
+    public List<T> GetMonths(List<WeatherRecord> records, string year);
+    public List<T> GetMonthsForEarlyYear(List<WeatherRecord> records);
+}
+
+public interface IMonthSorter
+{
+    public List<string> SortMonthsStrings(List<WeatherRecord> records);
 
 }
-public class MonthExtractor : IMonthExtractor
+
+public class MonthStringExtractor : IMonthExtractor<string>
 {
-    public List<string> GetMonthStrings(List<WeatherRecord> records)
+    List<string> monthStrings = new();
+
+    public List<string> GetMonthsForEarlyYear(List<WeatherRecord> records)
     {
-        List<string> monthStrings = new();
+        var earlistDate = records
+                              .OrderBy(r => r.DateOfRecord).First();
 
         foreach (var record in records)
         {
-            monthStrings.Add(record.DateOfRecord.ToString("MMMM"));
+            if (record.DateOfRecord.Year == earlistDate.DateOfRecord.Year) monthStrings.Add(record.DateOfRecord.ToString("MMMM"));
+        }
+
+        var sortedMonths = monthStrings
+            .Select(x => new { Name = x, Sort = DateOnly.ParseExact(x, "MMMM", CultureInfo.InvariantCulture) })
+            .OrderBy(x => x.Sort)
+            .Select(x => x.Name);
+
+        return monthStrings;
+
+    }
+
+    public List<string> GetMonths(List<WeatherRecord> records, string year)
+    {
+        foreach (var record in records)
+        {
+            if (record.DateOfRecord.Year.ToString() == year) monthStrings.Add(record.DateOfRecord.ToString("MMMM"));
         }
 
         var sortedMonths = monthStrings
@@ -24,4 +50,6 @@ public class MonthExtractor : IMonthExtractor
         return sortedMonths.Distinct().ToList();
     }
 }
+
+
 

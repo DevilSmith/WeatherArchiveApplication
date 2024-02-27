@@ -5,8 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<IMonthExtractor, MonthExtractor>()
-                .AddTransient<IYearExtractor, YearExtractor>();
+builder.Services.AddTransient<IMonthExtractor<string>, MonthStringExtractor>()
+                .AddTransient<IYearExtractor<string>, YearStringExtractor>()
+                .AddTransient<IPartOfRecordsExtractor, PartOfRecordsExtractor>()
+                .AddTransient<IDateParamsValidator<string>, DateStringParamsValidator>();
 
 var app = builder.Build();
 

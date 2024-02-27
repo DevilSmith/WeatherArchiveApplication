@@ -1,14 +1,12 @@
-using System.Globalization;
-
-public interface IYearExtractor
+public interface IYearExtractor<T>
 {
-    public List<string> GetYearStrings(List<WeatherRecord> records);
+    public List<string> GetYears(List<WeatherRecord> records);
 
 }
 
-public class YearExtractor : IYearExtractor
+public class YearStringExtractor : IYearExtractor<string>
 {
-    public List<string> GetYearStrings(List<WeatherRecord> records)
+    public List<string> GetYears(List<WeatherRecord> records)
     {
         List<string> yearStrings = new();
 

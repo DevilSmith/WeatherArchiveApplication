@@ -47,23 +47,33 @@
    
     <nav aria-label="Month pagination">
       <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
         @foreach(string month in Model.MonthStrings)
           {
-            <li class="page-item"><a class="page-link" href="#">@month</a></li>
+            if (month == Model.SelectedMonth) 
+            {
+              <li class="page-item active"><a class="page-link" href="@string.Format("Viewer?year={0}&month={1}", Model.SelectedYear, month)">@month</a></li>
+            }
+            else 
+            {
+              <li class="page-item"><a class="page-link" href="@string.Format("Viewer?year={0}&month={1}", Model.SelectedYear, month)">@month</a></li>
+            }
           }
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
       </ul>
     </nav>
 
     <nav aria-label="Year pagination">
       <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
         @foreach(string year in Model.YearStrings)
           {
-            <li class="page-item"><a class="page-link" href="#">@year</a></li>
+            if (year == Model.SelectedYear) 
+            {
+              <li class="page-item active"><a class="page-link" href="@string.Format("Viewer?year={0}&month=January", year)">@year</a></li>
+            }
+            else 
+            {
+              <li class="page-item"><a class="page-link" href="@string.Format("Viewer?year={0}&month=January", year)">@year</a></li>
+            }
           }
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
       </ul>
     </nav>
 </div>
