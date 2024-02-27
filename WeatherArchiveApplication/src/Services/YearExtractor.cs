@@ -15,7 +15,7 @@ public class YearStringExtractor : IYearExtractor<string>
             yearStrings.Add(record.DateOfRecord.Year.ToString());
         }
 
-        var sortedYears = yearStrings.OrderBy(c => int.Parse(c)).ToList();
+        var sortedYears = yearStrings.OrderByDescending(c => int.Parse(c)).ToList();
 
         return sortedYears.Distinct().ToList();
     }

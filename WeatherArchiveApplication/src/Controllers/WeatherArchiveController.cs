@@ -45,26 +45,26 @@ public class WeatherArchiveController : Controller
             {
                 case DateParamsValidationResult.InvalidAll:
                     {
-                        viewModel.WeatherRecords = _partOfRecordsExtractor.GetEarlistPartOfRecords(weatherRecords);
-                        viewModel.MonthStrings = _monthExtractor.GetMonthsForEarlyYear(weatherRecords);
                         viewModel.SelectedYear = _yearExtractor.GetYears(weatherRecords).First();
-                        viewModel.SelectedMonth = _monthExtractor.GetMonthsForEarlyYear(weatherRecords).First();
+                        viewModel.SelectedMonth = _monthExtractor.GetMonths(weatherRecords, viewModel.SelectedYear).First();
+                        viewModel.WeatherRecords = _partOfRecordsExtractor.GetPartOfRecords(viewModel.SelectedYear, viewModel.SelectedMonth, weatherRecords);
+                        viewModel.MonthStrings = _monthExtractor.GetMonths(weatherRecords, viewModel.SelectedYear);
                         break;
                     }
                 case DateParamsValidationResult.ValidAll:
                     {
-                        viewModel.WeatherRecords = _partOfRecordsExtractor.GetPartOfRecords(year, month, weatherRecords);
-                        viewModel.MonthStrings = _monthExtractor.GetMonths(weatherRecords, year);
                         viewModel.SelectedYear = year;
                         viewModel.SelectedMonth = month;
+                        viewModel.WeatherRecords = _partOfRecordsExtractor.GetPartOfRecords(year, month, weatherRecords);
+                        viewModel.MonthStrings = _monthExtractor.GetMonths(weatherRecords, year);
                         break;
                     }
                 case DateParamsValidationResult.ValidYear:
                     {
-                        viewModel.WeatherRecords = _partOfRecordsExtractor.GetEarlistMonthPartOfRecords(year, weatherRecords);
-                        viewModel.MonthStrings = _monthExtractor.GetMonths(weatherRecords, year);
                         viewModel.SelectedYear = year;
                         viewModel.SelectedMonth = _monthExtractor.GetMonths(weatherRecords, year).First();
+                        viewModel.WeatherRecords = _partOfRecordsExtractor.GetPartOfRecords(year, viewModel.SelectedMonth, weatherRecords);
+                        viewModel.MonthStrings = _monthExtractor.GetMonths(weatherRecords, year);
                         break;
                     }
             }

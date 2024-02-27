@@ -5,6 +5,39 @@
 @model WeatherArchiveViewModel
 
 <div class="text-center">
+
+    <nav aria-label="Year pagination">
+        <ul class="pagination">
+          @foreach(string year in Model.YearStrings)
+            {
+              if (year == Model.SelectedYear) 
+              {
+        <li class="page-item active"><a class="page-link" href="@string.Format("Viewer?year={0}&month={1}", year, Model.SelectedMonth)">@year</a></li>
+              }
+              else 
+              {
+        <li class="page-item"><a class="page-link" href="@string.Format("Viewer?year={0}&month={1}", year, Model.SelectedMonth)">@year</a></li>
+              }
+            }
+        </ul>
+    </nav>
+
+    <nav aria-label="Month pagination">
+        <ul class="pagination">
+          @foreach(string month in Model.MonthStrings)
+            {
+              if (month == Model.SelectedMonth) 
+              {
+                <li class="page-item active"><a class="page-link" href="@string.Format("Viewer?year={0}&month={1}", Model.SelectedYear, month)">@month</a></li>
+              }
+              else 
+              {
+                <li class="page-item"><a class="page-link" href="@string.Format("Viewer?year={0}&month={1}", Model.SelectedYear, month)">@month</a></li>
+              }
+            }
+        </ul>
+    </nav>
+
     <div class="table-responsive mb-1">
         <table class="table table-bordered table-striped table-hover">
           <thead>
@@ -45,36 +78,5 @@
         </table>
     </div>
    
-    <nav aria-label="Month pagination">
-      <ul class="pagination">
-        @foreach(string month in Model.MonthStrings)
-          {
-            if (month == Model.SelectedMonth) 
-            {
-              <li class="page-item active"><a class="page-link" href="@string.Format("Viewer?year={0}&month={1}", Model.SelectedYear, month)">@month</a></li>
-            }
-            else 
-            {
-              <li class="page-item"><a class="page-link" href="@string.Format("Viewer?year={0}&month={1}", Model.SelectedYear, month)">@month</a></li>
-            }
-          }
-      </ul>
-    </nav>
-
-    <nav aria-label="Year pagination">
-      <ul class="pagination">
-        @foreach(string year in Model.YearStrings)
-          {
-            if (year == Model.SelectedYear) 
-            {
-              <li class="page-item active"><a class="page-link" href="@string.Format("Viewer?year={0}&month=January", year)">@year</a></li>
-            }
-            else 
-            {
-              <li class="page-item"><a class="page-link" href="@string.Format("Viewer?year={0}&month=January", year)">@year</a></li>
-            }
-          }
-      </ul>
-    </nav>
-</div>
+  </div>
 

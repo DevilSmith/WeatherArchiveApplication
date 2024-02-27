@@ -8,7 +8,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IMonthExtractor<string>, MonthStringExtractor>()
                 .AddTransient<IYearExtractor<string>, YearStringExtractor>()
                 .AddTransient<IPartOfRecordsExtractor, PartOfRecordsExtractor>()
-                .AddTransient<IDateParamsValidator<string>, DateStringParamsValidator>();
+                .AddTransient<IDateParamsValidator<string>, DateStringParamsValidator>()
+                .AddTransient<IMonthSorter<string>, MonthStringSorter>();
 
 var app = builder.Build();
 
