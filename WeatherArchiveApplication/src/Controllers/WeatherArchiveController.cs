@@ -37,6 +37,8 @@ public class WeatherArchiveController : Controller
 
             var weatherRecords = db.WeatherRecords.ToList();
 
+            if (weatherRecords.Count == 0) return View("EmptyData");
+
             var validationResult = _dateParamsValidator.ValidateDateParams(year, month, weatherRecords);
 
             switch (validationResult)
