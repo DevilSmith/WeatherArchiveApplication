@@ -1,7 +1,13 @@
 using WeatherArchiveApp.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<FormOptions>(option =>
+    {
+        option.MultipartBodyLengthLimit = 512 * 1024 * 1024;
+    });
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -9,7 +15,9 @@ builder.Services.AddTransient<IMonthExtractor<string>, MonthStringExtractor>()
                 .AddTransient<IYearExtractor<string>, YearStringExtractor>()
                 .AddTransient<IPartOfRecordsExtractor, PartOfRecordsExtractor>()
                 .AddTransient<IDateParamsValidator<string>, DateStringParamsValidator>()
-                .AddTransient<IMonthSorter<string>, MonthStringSorter>();
+                .AddTransient<IMonthSorter<string>, MonthStringSorter>()
+                .AddTransient<IFileExtensionValidator<IFormFile, bool>, ExcelFileExtensionValidator>()
+                .AddTransient<IFileDataValidator<IFormFile>, ExcelFileModelValidator>();
 
 var app = builder.Build();
 
@@ -25,8 +33,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
-app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

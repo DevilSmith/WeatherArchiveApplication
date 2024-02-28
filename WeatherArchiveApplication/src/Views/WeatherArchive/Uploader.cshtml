@@ -1,7 +1,39 @@
 @{
-    ViewData["Title"] = "Weather Archive Uploader";
+    ViewData["Title"] = "Multi File Upload";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Weather Archive Uploader</h1>
-</div>
+@model UploaderFilesViewModel
+
+<form asp-action="MultiFileUpload" asp-controller="WeatherArchive" method="post" enctype="multipart/form-data" asp-antiforgery="false">
+
+    @if (Model.IsResponse)
+    {
+        if (Model.IsSuccess)
+        {
+            <div class="alert alert-success">
+                @Model.Message
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                @Model.Message
+            </div>
+        }
+    }
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <label class="col-form-label">Select Multiple Files</label>
+            <input asp-for="Files" class="form-control" multiple/>
+            <span asp-validation-for="Files" class="text-danger"></span>
+        </div>
+    </div>
+
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">Upload Files</button>
+        </div>
+    </div>
+</form>

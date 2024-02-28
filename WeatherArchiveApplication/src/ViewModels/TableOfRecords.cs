@@ -1,6 +1,6 @@
 namespace WeatherArchiveApp.ViewModels
 {
-    public class WeatherArchiveViewModel
+    public class TableOfRecordsViewModel
     {
         public List<WeatherRecord> WeatherRecords { get; set; } = new();
         public List<string> MonthStrings { get; set; } = new();
