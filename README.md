@@ -15,3 +15,7 @@ DOCKER_PLATFORM = DockerPlatforms.LINUX_ARM64.value # OR DotnetPlatforms.LINUX_A
 ```bash
 python3 deploy_project.py 
 ```
+or
+```bash
+python deploy_project.py 
+```
