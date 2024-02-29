@@ -10,7 +10,7 @@ public class WeatherRecord
     public string? WindDirection { get; set; }
     public byte? WindSpeed { get; set; }
     public byte? Overcast { get; set; }
-    public ushort OvercastLowerLimit { get; set; }
-    public byte? HorizontalVisibility { get; set; }
+    public ushort? OvercastLowerLimit { get; set; }
+    public string? HorizontalVisibility { get; set; }
     public string? WeatherEvents { get; set; }
 }

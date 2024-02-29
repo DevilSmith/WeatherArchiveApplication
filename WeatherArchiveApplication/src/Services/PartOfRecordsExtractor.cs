@@ -14,6 +14,8 @@ public class PartOfRecordsExtractor : IPartOfRecordsExtractor
         partOfRecords = allRecords
           .Where(r => r.DateOfRecord.Year.ToString() == year)
           .Where(r => r.DateOfRecord.ToString("MMMM") == month)
+          .OrderBy(r => r.TimeOfRecord)
+          .OrderBy(r => r.DateOfRecord)
           .ToList();
 
         return partOfRecords;

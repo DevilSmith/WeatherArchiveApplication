@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WeatherArchiveApp.Models;
@@ -11,9 +12,11 @@ using WeatherArchiveApp.Models;
 namespace WeatherArchiveApp.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240228205448_v0.2")]
+    partial class v02
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,8 +42,8 @@ namespace WeatherArchiveApp.Migrations
                     b.Property<float>("Dewpoint")
                         .HasColumnType("real");
 
-                    b.Property<string>("HorizontalVisibility")
-                        .HasColumnType("text");
+                    b.Property<byte?>("HorizontalVisibility")
+                        .HasColumnType("smallint");
 
                     b.Property<float>("Humidity")
                         .HasColumnType("real");

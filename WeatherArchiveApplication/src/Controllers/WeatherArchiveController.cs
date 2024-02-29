@@ -14,6 +14,7 @@ public class WeatherArchiveController : Controller
     private readonly IDateParamsValidator<string> _dateParamsValidator;
     private readonly IFileExtensionValidator<IFormFile, bool> _fileExtensionValidator;
     private readonly IFileDataValidator<IFormFile> _fileDataValidator;
+    private readonly IDataExtractor<List<WeatherRecord>, IFormFile> _dataExtractor;
 
     public WeatherArchiveController(
         ILogger<WeatherArchiveController> logger,
@@ -22,7 +23,8 @@ public class WeatherArchiveController : Controller
         IPartOfRecordsExtractor partOfRecordsExtractor,
         IDateParamsValidator<string> dateParamsValidator,
         IFileExtensionValidator<IFormFile, bool> fileExtensionValidator,
-        IFileDataValidator<IFormFile> fileDataValidator)
+        IFileDataValidator<IFormFile> fileDataValidator,
+        IDataExtractor<List<WeatherRecord>, IFormFile> dataExtractor)
     {
         _logger = logger;
         _monthExtractor = monthExtractor;
@@ -31,7 +33,16 @@ public class WeatherArchiveController : Controller
         _dateParamsValidator = dateParamsValidator;
         _fileExtensionValidator = fileExtensionValidator;
         _fileDataValidator = fileDataValidator;
+        _dataExtractor = dataExtractor;
     }
+
+    delegate void SetupUploaderFilesViewModel(UploaderFilesViewModel viewModel, bool isSuccess, string message);
+
+    SetupUploaderFilesViewModel setupUploaderFilesViewModel = delegate (UploaderFilesViewModel viewModel, bool isSuccess, string message)
+    {
+        viewModel.IsSuccess = isSuccess;
+        viewModel.Message = message;
+    };
 
     [HttpPost]
     [RequestSizeLimit(512 * 1024 * 1024)]
@@ -50,23 +61,36 @@ public class WeatherArchiveController : Controller
                     {
                         if (_fileExtensionValidator.ValidateFileExtension(file) == false)
                         {
-                            uploaderFilesViewModel.IsSuccess = false;
-                            uploaderFilesViewModel.Message = "File extension must be .xlsx. Please, select another files.";
+                            setupUploaderFilesViewModel(uploaderFilesViewModel, false, "File extension must be .xlsx. Please, select another files.");
                             return View("Uploader", uploaderFilesViewModel);
                         }
 
-                        _fileDataValidator.ValidateFileData(file);
+                        if (_fileDataValidator.ValidateFileData(file) == false)
+                        {
+                            setupUploaderFilesViewModel(uploaderFilesViewModel, false, "File have incorrect structure. Please, select another files.");
+                            return View("Uploader", uploaderFilesViewModel);
+                        }
+
+                        using (ApplicationContext db = new ApplicationContext())
+                        {
+                            var extractedData = _dataExtractor.ExtractData(file);
+
+                            foreach (var record in extractedData)
+                            {
+                                db.WeatherRecords.Add(record);
+                            }
+
+                            db.SaveChanges();
+                        }
 
                     }
 
-                    uploaderFilesViewModel.IsSuccess = true;
-                    uploaderFilesViewModel.Message = "Files upload successfully";
+                    setupUploaderFilesViewModel(uploaderFilesViewModel, true, "Files upload successfully");
                     return View("Uploader", uploaderFilesViewModel);
                 }
                 else
                 {
-                    uploaderFilesViewModel.IsSuccess = false;
-                    uploaderFilesViewModel.Message = "Please select files";
+                    setupUploaderFilesViewModel(uploaderFilesViewModel, false, "Please select files");
                     return View("Uploader", uploaderFilesViewModel);
                 }
             }
@@ -100,6 +124,8 @@ public class WeatherArchiveController : Controller
             if (weatherRecords.Count == 0) return View("EmptyData");
 
             var validationResult = _dateParamsValidator.ValidateDateParams(year, month, weatherRecords);
+
+            Console.WriteLine(validationResult);
 
             switch (validationResult)
             {

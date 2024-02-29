@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
 
 namespace WeatherArchiveApp.ViewModels;
 
@@ -15,3 +14,5 @@ public class UploaderFilesViewModel : ReponseViewModel
     [Required(ErrorMessage = "Please select files")]
     public List<IFormFile> Files { get; set; } = new();
 }
+
+

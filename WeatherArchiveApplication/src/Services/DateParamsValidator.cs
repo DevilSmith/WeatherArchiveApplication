@@ -18,7 +18,7 @@ public class DateStringParamsValidator : IDateParamsValidator<string>
 
         foreach (var record in records)
         {
-            if ((record.DateOfRecord.Year.ToString() == year) && (record.DateOfRecord.ToString("MMMM") == month)) { validationResult = DateParamsValidationResult.ValidAll; }
+            if ((record.DateOfRecord.Year.ToString() == year) && (record.DateOfRecord.ToString("MMMM") == month)) { return DateParamsValidationResult.ValidAll; }
             else if (record.DateOfRecord.Year.ToString() == year) { validationResult = DateParamsValidationResult.ValidYear; }
         }
 

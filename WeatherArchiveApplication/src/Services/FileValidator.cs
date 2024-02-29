@@ -1,8 +1,3 @@
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
-using NPOI.SS.Util;
-using NPOI.HSSF.Util;
-
 public interface IFileExtensionValidator<T, M>
 {
     public M ValidateFileExtension(T file);
@@ -24,26 +19,26 @@ public interface IFileDataValidator<T>
 
 public class ExcelFileModelValidator : IFileDataValidator<IFormFile>
 {
+    private readonly IDataExtractor<List<WeatherRecord>, IFormFile> _dataExtractor;
+
+    public ExcelFileModelValidator(IDataExtractor<List<WeatherRecord>, IFormFile> dataExtractor)
+    {
+        _dataExtractor = dataExtractor;
+    }
+
     public bool ValidateFileData(IFormFile file)
     {
-        IWorkbook workbook;
-        using (MemoryStream memStream = new())
+        List<WeatherRecord> extractedData = new();
+
+        try
         {
-            file.CopyTo(memStream);
-            memStream.Position = 0;
-            workbook = new XSSFWorkbook(memStream);
+            extractedData = _dataExtractor.ExtractData(file);
+        }
+        catch
+        {
+            return false;
         }
 
-        // Получение листа
-        ISheet sheet = workbook.GetSheetAt(0);
-
-        // Чтение данных из ячейки
-        IRow row = sheet.GetRow(0);
-        string cellValue = row.GetCell(0).StringCellValue;
-
-        Console.WriteLine("Getted cell: ");
-        Console.WriteLine(cellValue);
-
-        return false;
+        return true;
     }
 }

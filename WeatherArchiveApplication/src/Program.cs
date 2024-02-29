@@ -17,7 +17,8 @@ builder.Services.AddTransient<IMonthExtractor<string>, MonthStringExtractor>()
                 .AddTransient<IDateParamsValidator<string>, DateStringParamsValidator>()
                 .AddTransient<IMonthSorter<string>, MonthStringSorter>()
                 .AddTransient<IFileExtensionValidator<IFormFile, bool>, ExcelFileExtensionValidator>()
-                .AddTransient<IFileDataValidator<IFormFile>, ExcelFileModelValidator>();
+                .AddTransient<IFileDataValidator<IFormFile>, ExcelFileModelValidator>()
+                .AddTransient<IDataExtractor<List<WeatherRecord>, IFormFile>, ExcelDataExtractor>();
 
 var app = builder.Build();
 
