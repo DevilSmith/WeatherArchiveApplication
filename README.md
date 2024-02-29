@@ -1,3 +1,11 @@
+## Requirements
+
+* .NET 7 SDK
+* Docker
+* Docker Compose
+* Python
+
+
 ## Installation
 For installation of application:
 1. Download application:
