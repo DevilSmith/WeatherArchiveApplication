@@ -3,7 +3,7 @@
 * .NET 7 SDK
 * Docker
 * Docker Compose
-* Python
+* Python 3
 
 
 ## Installation
