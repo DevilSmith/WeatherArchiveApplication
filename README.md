@@ -27,3 +27,7 @@ or
 ```bash
 python deploy_project.py 
 ```
+4. Start docker-compose (docker-compose.yml should be generated after the 3rd paragraph of the instruction by the directory above):
+```bash
+docker-compose up -d --force-recreate
+```
