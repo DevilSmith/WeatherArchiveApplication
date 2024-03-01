@@ -32,3 +32,9 @@ python deploy_project.py
 docker-compose up -d --force-recreate
 ```
 5. To access the service, enter the URL in the browser: `http://localhost:5001`
+
+## Screenshots
+
+<img width="1440" alt="image" src="https://github.com/DevilSmith/WeatherArchiveApplication/assets/85245255/f06e7515-ee9c-4b53-9a1e-f3cbaf43081c">
+<img width="1440" alt="image" src="https://github.com/DevilSmith/WeatherArchiveApplication/assets/85245255/3c1d4af7-2e78-4e03-a79e-a276d4ad93da">
+
