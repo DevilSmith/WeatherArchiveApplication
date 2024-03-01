@@ -31,3 +31,4 @@ python deploy_project.py
 ```bash
 docker-compose up -d --force-recreate
 ```
+5. To access the service, enter the URL in the browser: `http://localhost:5001`
